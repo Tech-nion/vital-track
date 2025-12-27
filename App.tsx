@@ -151,7 +151,7 @@ const App: React.FC = () => {
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   const stats: HealthStats = useMemo(() => calculateHealthStats(profile), [profile]);
-  const calorieProgress = 50; // Placeholder for demo
+  const calorieProgress = 50; // Placeholder
 
   useEffect(() => {
     setIsAuthChecking(false);
@@ -191,7 +191,14 @@ const App: React.FC = () => {
       </nav>
 
       <main className="flex-1 md:ml-72 p-6 space-y-6">
-        {activeTab==='dashboard' && <div className="space-y-4">Dashboard Placeholder</div>}
+        {activeTab==='dashboard' && (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-white p-6 rounded-xl shadow">Daily Calories: {stats.dailyCalorieTarget}</div>
+            <div className="bg-white p-6 rounded-xl shadow">Water Intake: {waterCount} cups</div>
+            <div className="bg-white p-6 rounded-xl shadow">Step Progress: {Math.min(stepLogs.reduce((a,b)=>a+b.steps,0), profile.stepGoal)} / {profile.stepGoal}</div>
+          </div>
+        )}
+
         {activeTab==='chat' && (
           <div className="flex flex-col h-[80vh] border p-4 rounded-lg bg-white">
             <div className="flex-1 overflow-y-auto space-y-2">
@@ -201,6 +208,7 @@ const App: React.FC = () => {
                 </div>
               ))}
               <div ref={chatEndRef} />
+              {isChatLoading && <div className="text-center text-gray-500">AI is typing...</div>}
             </div>
             <form onSubmit={e=>{e.preventDefault(); handleSendMessage();}} className="flex gap-2 mt-2">
               <input className="flex-1 border p-2 rounded" value={userInput} onChange={e=>setUserInput(e.target.value)} placeholder="Ask AI..." />
@@ -208,6 +216,7 @@ const App: React.FC = () => {
             </form>
           </div>
         )}
+
         {activeTab==='logs' && <LogsView onAddFood={(e:any)=>{e.preventDefault(); console.log('food added');}} onAddWeight={()=>{}} onAddSteps={()=>{}} />}
         {activeTab==='trends' && <TrendsView weightLogs={weightLogs} />}
         {activeTab==='profile' && <ProfileView profile={profile} onUpdateProfile={setProfile} />}
