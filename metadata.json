@@ -1,0 +1,9 @@
+{
+  "name": "VitalTrack",
+  "description": "A professional cross-platform health tracking application featuring calorie counting, exercise logging, weight trends, and AI-powered health insights.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}

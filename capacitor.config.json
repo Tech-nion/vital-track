@@ -1,0 +1,10 @@
+
+{
+  "appId": "com.vitaltrack.app",
+  "appName": "VitalTrack",
+  "webDir": ".",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  }
+}
